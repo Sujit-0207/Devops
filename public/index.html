@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Geofence Offer Demo</title>
+        <style>
+            body {
+                font-family: system-ui, Arial, sans-serif;
+                margin: 2rem;
+            }
+            .offer {
+                display: none;
+                padding: 1rem;
+                border-radius: 8px;
+                background: #f1fff1;
+                border: 1px solid #8fda8f;
+            }
+            .hidden {
+                display: none;
+            }
+            .status {
+                margin-top: 1rem;
+                color: #555;
+            }
+            .error {
+                color: #a00;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Location-based Offer</h1>
+        <p>This demo shows an offer only when you are inside the geofenced area.</p>
+        <button id="check">Check My Location</button>
+        <div id="offer" class="offer"></div>
+        <div id="status" class="status"></div>
+        <script>
+            const statusEl = document.getElementById("status");
+            const offerEl = document.getElementById("offer");
+            const button = document.getElementById("check");
+
+            function updateStatus(text, isError = false) {
+                statusEl.textContent = text;
+                statusEl.className = "status" + (isError ? " error" : "");
+            }
+
+            async function checkLocation() {
+                if (!navigator.geolocation) {
+                    updateStatus("Geolocation not supported in this browser.", true);
+                    return;
+                }
+                updateStatus("Getting your location...");
+                navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                        const { latitude, longitude } = pos.coords;
+                        updateStatus(`Location: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}. Checking offer...`);
+                        try {
+                            const res = await fetch(`/offer?lat=${latitude}&lng=${longitude}`);
+                            const data = await res.json();
+                            if (data.inside) {
+                                offerEl.innerHTML = `<h2>${data.offer.title}</h2><p>${data.offer.description}</p><small>${data.offer.terms}</small>`;
+                                offerEl.style.display = "block";
+                                updateStatus(`You are inside ${data.area}. Offer shown.`);
+                            } else {
+                                offerEl.style.display = "none";
+                                offerEl.innerHTML = "";
+                                updateStatus(`You are outside ${data.area}. Offer hidden.`);
+                            }
+                        } catch (e) {
+                            updateStatus("Failed to check offer: " + e.message, true);
+                        }
+                    },
+                    (err) => {
+                        updateStatus("Failed to get location: " + err.message, true);
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            }
+
+            button.addEventListener("click", checkLocation);
+        </script>
+    </body>
+    <!-- For demo: You can also test by appending lat/lng in the address bar to /offer endpoint directly. -->
+</html>
