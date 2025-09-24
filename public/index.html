@@ -3,41 +3,158 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Geofence Offer Demo</title>
+        <title>Location Offers - Clothing Stores</title>
         <style>
+            :root {
+                --bg: #f8f9fb;
+                --text: #111;
+                --muted: #666;
+                --brand: #ff5200;
+                --card: #fff;
+            }
             body {
                 font-family: system-ui, Arial, sans-serif;
-                margin: 2rem;
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+            }
+            header {
+                position: sticky;
+                top: 0;
+                background: #fff;
+                border-bottom: 1px solid #eee;
+                padding: 12px 16px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                z-index: 10;
+            }
+            header .brand {
+                font-weight: 700;
+                color: var(--brand);
+                font-size: 18px;
+            }
+            header input {
+                flex: 1;
+                padding: 10px 12px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+            header button {
+                padding: 10px 12px;
+                border-radius: 8px;
+                border: 1px solid #ddd;
+                background: #fff;
+                cursor: pointer;
+            }
+            .row {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin: 12px 0;
+            }
+            .row input {
+                width: 160px;
+            }
+            main {
+                max-width: 1100px;
+                margin: 16px auto;
+                padding: 0 16px 48px;
             }
             .offer {
                 display: none;
-                padding: 1rem;
+                padding: 12px;
                 border-radius: 8px;
                 background: #f1fff1;
                 border: 1px solid #8fda8f;
+                margin-bottom: 16px;
             }
-            .hidden {
-                display: none;
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 16px;
+            }
+            .card {
+                background: var(--card);
+                border: 1px solid #eee;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            }
+            .thumb {
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+                display: block;
+                background: #ddd;
+            }
+            .content {
+                padding: 12px;
+            }
+            .title {
+                font-weight: 700;
+                margin: 0 0 6px;
+            }
+            .meta {
+                font-size: 12px;
+                color: var(--muted);
+                display: flex;
+                gap: 8px;
+            }
+            .badge {
+                display: inline-block;
+                margin-top: 8px;
+                background: #ffe8db;
+                color: #8a2b06;
+                padding: 4px 8px;
+                border-radius: 999px;
+                font-size: 12px;
             }
             .status {
-                margin-top: 1rem;
-                color: #555;
+                margin-top: 12px;
+                color: var(--muted);
+                font-size: 13px;
             }
-            .error {
-                color: #a00;
+            .controls {
+                display: flex;
+                gap: 8px;
+                margin-left: auto;
             }
         </style>
     </head>
     <body>
-        <h1>Location-based Offer</h1>
-        <p>This demo shows an offer only when you are inside the geofenced area.</p>
-        <button id="check">Check My Location</button>
-        <div id="offer" class="offer"></div>
-        <div id="status" class="status"></div>
+        <header>
+            <div class="brand">StyleNow</div>
+            <input id="search" placeholder="Search for stores or categories" />
+            <div class="controls">
+                <button id="check">Use My Location</button>
+            </div>
+        </header>
+        <main>
+            <div class="row">
+                <button id="useCurrent">Use Current Location</button>
+                <input id="lat" placeholder="Latitude" />
+                <input id="lng" placeholder="Longitude" />
+                <button id="applyLatLng">Apply Lat/Lng</button>
+                <select id="regionSelect"></select>
+            </div>
+            <div id="offer" class="offer"></div>
+            <div id="cards" class="grid"></div>
+            <div id="status" class="status"></div>
+        </main>
         <script>
             const statusEl = document.getElementById("status");
             const offerEl = document.getElementById("offer");
+            const cardsEl = document.getElementById("cards");
+            const searchEl = document.getElementById("search");
+            const useCurrentBtn = document.getElementById("useCurrent");
+            const applyLatLngBtn = document.getElementById("applyLatLng");
+            const latInput = document.getElementById("lat");
+            const lngInput = document.getElementById("lng");
+            const regionSelect = document.getElementById("regionSelect");
+            let lastData = null;
             const button = document.getElementById("check");
+            let lastCoords = null;
 
             function updateStatus(text, isError = false) {
                 statusEl.textContent = text;
@@ -55,19 +172,9 @@
                         const { latitude, longitude } = pos.coords;
                         updateStatus(`Location: ${latitude.toFixed(5)}, ${longitude.toFixed(5)}. Checking offer...`);
                         try {
-                            const res = await fetch(`/offer?lat=${latitude}&lng=${longitude}`);
-                            const data = await res.json();
-                            if (data.inside) {
-                                offerEl.innerHTML = `<h2>${data.offer.title}</h2><p>${data.offer.description}</p><small>${data.offer.terms}</small>`;
-                                offerEl.style.display = "block";
-                                updateStatus(`You are inside ${data.area}. Offer shown.`);
-                            } else {
-                                offerEl.style.display = "none";
-                                offerEl.innerHTML = "";
-                                updateStatus(`You are outside ${data.area}. Offer hidden.`);
-                            }
+                            await refreshForCoords(latitude, longitude);
                         } catch (e) {
-                            updateStatus("Failed to check offer: " + e.message, true);
+                            updateStatus("Failed to load data: " + e.message, true);
                         }
                     },
                     (err) => {
@@ -78,6 +185,83 @@
             }
 
             button.addEventListener("click", checkLocation);
+            useCurrentBtn.addEventListener("click", checkLocation);
+            applyLatLngBtn.addEventListener("click", async () => {
+                const lat = parseFloat(latInput.value);
+                const lng = parseFloat(lngInput.value);
+                if (Number.isNaN(lat) || Number.isNaN(lng)) {
+                    return updateStatus("Enter valid numeric latitude and longitude", true);
+                }
+                await refreshForCoords(lat, lng);
+            });
+            regionSelect.addEventListener("change", async () => {
+                const value = regionSelect.value;
+                if (!value) return;
+                const [lat, lng] = value.split(",").map(parseFloat);
+                await refreshForCoords(lat, lng);
+            });
+
+            async function refreshForCoords(latitude, longitude) {
+                lastCoords = { latitude, longitude };
+                // Offer visibility
+                const offerRes = await fetch(`/offer?lat=${latitude}&lng=${longitude}`);
+                const offerData = await offerRes.json();
+                if (offerData.inside) {
+                    offerEl.innerHTML = `<strong>${offerData.offer.title}</strong> — ${offerData.offer.description} <small>${offerData.offer.terms}</small>`;
+                    offerEl.style.display = "block";
+                    updateStatus(`You are inside ${offerData.area}. Offers applied.`);
+                } else {
+                    offerEl.style.display = "none";
+                    offerEl.innerHTML = "";
+                    updateStatus(`You are outside eligible regions. Offers hidden.`);
+                }
+
+                // Stores list
+                const storeRes = await fetch(`/stores?lat=${latitude}&lng=${longitude}`);
+                const storeData = await storeRes.json();
+                lastData = storeData.stores;
+                renderCards(storeData.stores);
+            }
+
+            function renderCards(items) {
+                cardsEl.innerHTML = "";
+                items.forEach((r) => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <div class="content">
+                            <div class="title">${r.name}</div>
+                            <div class="meta">
+                                <span>${(r.rating || 4).toFixed(1)} ★</span>
+                                <span>${r.priceRange || "₹₹"}</span>
+                            </div>
+                            <div class="meta">${(r.categories || []).join(", ")}</div>
+                            ${r.eligible && r.offer ? `<div class="badge">${r.offer.title}</div>` : '<div class="badge">No location-based offer</div>'}
+                        </div>
+                    `;
+                    cardsEl.appendChild(card);
+                });
+            }
+
+            // Simple client-side search filter
+            searchEl.addEventListener("input", () => {
+                if (!lastData) return;
+                const q = searchEl.value.trim().toLowerCase();
+                if (!q) return renderCards(lastData);
+                const filtered = lastData.filter((r) => r.name.toLowerCase().includes(q) || (r.categories || []).join(" ").toLowerCase().includes(q));
+                renderCards(filtered);
+            });
+
+            // Load region presets
+            (async function loadRegions() {
+                try {
+                    const res = await fetch("/regions");
+                    const data = await res.json();
+                    regionSelect.innerHTML = '<option value="">Select Region</option>' + data.regions.map((r) => `<option value="${r.center.lat},${r.center.lng}">${r.name}</option>`).join("");
+                } catch (e) {
+                    /* ignore */
+                }
+            })();
         </script>
     </body>
     <!-- For demo: You can also test by appending lat/lng in the address bar to /offer endpoint directly. -->

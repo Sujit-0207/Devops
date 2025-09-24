@@ -12,9 +12,12 @@ This project demonstrates a geofencing-based offer system that displays a promot
 
 -   Backend (`/src`):
     -   `GET /offer?lat=..&lng=..` evaluates if a point is inside the geofence.
+    -   `GET /restaurants?lat=..&lng=..` lists restaurants and marks offers eligible if inside area.
+    -   `GET /restaurants/:id?lat=..&lng=..` returns a single restaurant with location-based offer eligibility.
     -   `GET /metrics` exposes Prometheus metrics.
     -   `GET /healthz` for health checks.
 -   Frontend (`/public`): static page that asks for browser geolocation and calls `/offer` to show/hide the offer.
+    -   Lists restaurants and highlights applicable offers when inside the geofence.
 -   Geofence: a polygon (approximate Coimbatore boundary for demo) in `src/geofence.js`. Replace with accurate GeoJSON for production.
 -   Monitoring: Prometheus scrapes the app; Grafana has a basic dashboard.
 
@@ -83,6 +86,9 @@ npm run start
     - Inside area (use Coimbatore coords): `http://localhost:3000/offer?lat=11.0168&lng=76.9558` → shows offer.
     - Outside area (e.g., Chennai): `http://localhost:3000/offer?lat=13.0827&lng=80.2707` → hides offer.
 3. In Grafana, view "Geofence Offer Monitoring" dashboard for live metrics.
+4. Restaurants API examples:
+    - List: `http://localhost:3000/restaurants?lat=11.0168&lng=76.9558`
+    - Single: `http://localhost:3000/restaurants/r1?lat=11.0168&lng=76.9558`
 
 ## Replace Geofence
 

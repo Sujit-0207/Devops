@@ -3,7 +3,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const path = require("path");
 const promClient = require("prom-client");
-const { isPointInsideGeofence, getGeofenceName } = require("./geofence");
+const { isPointInsideGeofence, getGeofenceName, getRegions, detectRegion } = require("./geofence");
+const { stores } = require("./data");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,7 +51,8 @@ app.get("/offer", (req, res) => {
         return res.status(400).json({ error: "lat and lng query params are required as numbers" });
     }
 
-    const inside = isPointInsideGeofence([lng, lat]);
+    const region = detectRegion([lng, lat]);
+    const inside = Boolean(region);
     lastCheckGauge.set(inside ? 1 : 0);
     requestCounter.inc({ result: inside ? "inside" : "outside" });
     endTimer();
@@ -58,7 +60,7 @@ app.get("/offer", (req, res) => {
     if (inside) {
         return res.json({
             inside: true,
-            area: getGeofenceName(),
+            area: region.name,
             offer: {
                 title: "Buy 1 Get 1 Free",
                 description: "Exclusive offer available within the geofenced area.",
@@ -67,7 +69,53 @@ app.get("/offer", (req, res) => {
         });
     }
 
-    return res.json({ inside: false, area: getGeofenceName() });
+    return res.json({ inside: false, area: null });
+});
+
+// Stores listing with region-based offers
+app.get("/stores", (req, res) => {
+    const lat = parseFloat(req.query.lat);
+    const lng = parseFloat(req.query.lng);
+
+    const region = !Number.isNaN(lat) && !Number.isNaN(lng) ? detectRegion([lng, lat]) : null;
+    const inside = Boolean(region);
+
+    const result = stores.map((s) => ({
+        id: s.id,
+        name: s.name,
+        categories: s.categories,
+        rating: s.rating,
+        priceRange: s.priceRange,
+        offer: inside && region && s.offersByRegion[region.name] ? s.offersByRegion[region.name] : null,
+        eligible: inside && Boolean(region && s.offersByRegion[region.name]),
+    }));
+
+    res.json({ area: region ? region.name : null, inside, stores: result });
+});
+
+app.get("/stores/:id", (req, res) => {
+    const lat = parseFloat(req.query.lat);
+    const lng = parseFloat(req.query.lng);
+    const store = stores.find((s) => s.id === req.params.id);
+    if (!store) return res.status(404).json({ error: "Store not found" });
+    const region = !Number.isNaN(lat) && !Number.isNaN(lng) ? detectRegion([lng, lat]) : null;
+    const inside = Boolean(region);
+    res.json({
+        id: store.id,
+        name: store.name,
+        categories: store.categories,
+        rating: store.rating,
+        priceRange: store.priceRange,
+        offer: inside && region && store.offersByRegion[region.name] ? store.offersByRegion[region.name] : null,
+        eligible: inside,
+        area: region ? region.name : null,
+        inside,
+    });
+});
+
+// Regions endpoint for presets
+app.get("/regions", (req, res) => {
+    res.json({ regions: getRegions() });
 });
 
 app.get("/metrics", async (req, res) => {
