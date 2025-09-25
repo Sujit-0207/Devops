@@ -2,10 +2,15 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+        <!-- StyleHub Favicon: FontAwesome T-Shirt Icon as SVG -->
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'%3E%3Cpath fill='%23e74c3c' d='M631.2 96.2 518.2 3.7c-13.2-10.6-32.2-8.6-42.8 4.6l-43.6 54.5c-6.1 7.6-15.2 12-24.7 12H232.9c-9.5 0-18.6-4.4-24.7-12l-43.6-54.5c-10.6-13.2-29.6-15.2-42.8-4.6L8.8 96.2C-2.9 105.5-3 122.7 8.7 132l87.2 70.2c7.2 5.8 17.7 4.7 23.5-2.5l13.6-16.7c6.8-8.4 19.7-7.7 25.2 1.3l13.7 21.9c2.7 4.3 4.1 9.3 4.1 14.4V464c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V220.6c0-5.1 1.4-10.1 4.1-14.4l13.7-21.9c5.5-9 18.4-9.7 25.2-1.3l13.6 16.7c5.8 7.2 16.3 8.3 23.5 2.5l87.2-70.2c11.7-9.3 11.6-26.5-.1-35.8z'/%3E%3C/svg%3E" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>StyleHub - Premium Fashion Destinations</title>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
         <style>
             :root {
                 --primary: #2c3e50;
@@ -31,7 +36,7 @@
             }
 
             body {
-                font-family: 'Poppins', sans-serif;
+                font-family: "Poppins", sans-serif;
                 background: var(--background);
                 color: var(--text-primary);
                 line-height: 1.6;
@@ -52,13 +57,18 @@
             }
 
             @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-20px); }
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-20px);
+                }
             }
 
             /* Header Styles */
             header {
-                background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,0.95) 100%);
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
                 backdrop-filter: blur(20px);
                 border-bottom: 1px solid var(--border);
                 position: sticky;
@@ -109,7 +119,7 @@
                 font-size: 1rem;
                 transition: all 0.3s ease;
                 background: var(--surface);
-                box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             }
 
             .search-input:focus {
@@ -165,7 +175,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
                 pointer-events: none;
-                font-family: 'Poppins', sans-serif;
+                font-family: "Poppins", sans-serif;
                 font-weight: 600;
                 font-size: 0.9rem;
                 display: flex;
@@ -252,7 +262,7 @@
             }
 
             .popup-coords {
-                font-family: 'Courier New', monospace;
+                font-family: "Courier New", monospace;
                 font-size: 1rem;
                 color: var(--text-primary);
                 background: var(--background);
@@ -296,7 +306,7 @@
             }
 
             .hero::before {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -317,7 +327,7 @@
                 font-size: 3.5rem;
                 font-weight: 800;
                 margin-bottom: 1rem;
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
 
             .hero p {
@@ -418,24 +428,34 @@
             }
 
             @keyframes slideIn {
-                from { transform: translateY(-20px); opacity: 0; }
-                to { transform: translateY(0); opacity: 1; }
+                from {
+                    transform: translateY(-20px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
             }
 
             .offer-banner::before {
-                content: '';
+                content: "";
                 position: absolute;
                 top: -50%;
                 left: -50%;
                 width: 200%;
                 height: 200%;
-                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
                 animation: rotate 20s linear infinite;
             }
 
             @keyframes rotate {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
             }
 
             .offer-content {
@@ -493,7 +513,7 @@
 
             .store-card:hover {
                 transform: translateY(-10px);
-                box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
             }
 
             /* Brand Image Styling */
@@ -505,7 +525,7 @@
                 align-items: center;
                 justify-content: center;
                 padding: 1rem;
-                border-bottom: 1px solid rgba(0,0,0,0.05);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             }
 
             .store-image {
@@ -515,7 +535,7 @@
                 height: auto;
                 object-fit: contain;
                 border-radius: 8px;
-                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
                 transition: transform 0.3s ease;
             }
 
@@ -545,7 +565,7 @@
             }
 
             .store-header::before {
-                content: '';
+                content: "";
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -625,8 +645,13 @@
             }
 
             @keyframes pulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.02); }
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.02);
+                }
             }
 
             .offer-title-badge {
@@ -664,35 +689,44 @@
 
             /* Responsive */
             @media (max-width: 768px) {
-                .hero h1 { font-size: 2.5rem; }
-                .hero p { font-size: 1.1rem; }
-                .controls-card { 
-                    flex-direction: column; 
-                    gap: 1.5rem; 
+                .hero h1 {
+                    font-size: 2.5rem;
                 }
-                .control-group { 
-                    flex-direction: column; 
-                    width: 100%; 
+                .hero p {
+                    font-size: 1.1rem;
                 }
-                .control-input, .select-custom { 
-                    width: 100%; 
-                    min-width: auto; 
+                .controls-card {
+                    flex-direction: column;
+                    gap: 1.5rem;
                 }
-                .stores-header { 
-                    flex-direction: column; 
-                    gap: 1rem; 
-                    text-align: center; 
+                .control-group {
+                    flex-direction: column;
+                    width: 100%;
                 }
-                .stores-grid { 
-                    grid-template-columns: 1fr; 
+                .control-input,
+                .select-custom {
+                    width: 100%;
+                    min-width: auto;
                 }
-                .header-content { 
-                    flex-direction: column; 
-                    gap: 1rem; 
+                .stores-header {
+                    flex-direction: column;
+                    gap: 1rem;
+                    text-align: center;
                 }
-                .brand { font-size: 1.5rem; }
-                .search-container { max-width: none; }
-                
+                .stores-grid {
+                    grid-template-columns: 1fr;
+                }
+                .header-content {
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+                .brand {
+                    font-size: 1.5rem;
+                }
+                .search-container {
+                    max-width: none;
+                }
+
                 /* Mobile Location Display */
                 .location-display {
                     top: 10px;
@@ -700,28 +734,28 @@
                     padding: 0.6rem 1rem;
                     font-size: 0.8rem;
                 }
-                
+
                 .location-display i {
                     font-size: 0.9rem;
                 }
-                
+
                 .location-text {
                     max-width: 80px;
                 }
-                
+
                 .popup-content {
                     padding: 1.5rem;
                     margin: 1rem;
                 }
-                
+
                 .popup-icon {
                     font-size: 2.5rem;
                 }
-                
+
                 .popup-title {
                     font-size: 1.3rem;
                 }
-                
+
                 .popup-coords {
                     font-size: 0.9rem;
                     padding: 0.8rem;
@@ -733,20 +767,22 @@
                 display: inline-block;
                 width: 20px;
                 height: 20px;
-                border: 3px solid rgba(255,255,255,.3);
+                border: 3px solid rgba(255, 255, 255, 0.3);
                 border-radius: 50%;
                 border-top-color: #fff;
                 animation: spin 1s ease-in-out infinite;
             }
 
             @keyframes spin {
-                to { transform: rotate(360deg); }
+                to {
+                    transform: rotate(360deg);
+                }
             }
         </style>
     </head>
     <body>
         <div class="bg-animation"></div>
-        
+
         <!-- Location Display Button -->
         <button id="locationDisplay" class="location-display" onclick="showLocationDetails()" title="Click to view location details">
             <i class="fas fa-map-marker-alt"></i>
@@ -765,7 +801,7 @@
                 <button class="popup-close" onclick="closeLocationPopup()">Got it!</button>
             </div>
         </div>
-        
+
         <header>
             <div class="header-content">
                 <a href="#" class="brand">
@@ -853,28 +889,28 @@
 
             // Store brand colors for dynamic theming
             const brandColors = {
-                'Zara': ['#000000', '#ffffff'],
-                'H&M': ['#e50000', '#ffffff'],
-                'Nike': ['#ff6900', '#000000'],
-                "Levi's": ['#0f1b8c', '#ffffff'],
-                'Peter England': ['#8B0000', '#ffffff'],
-                'Allen Solley': ['#2E4057', '#ffffff'],
-                'Raymonds': ['#800020', '#ffffff']
+                Zara: ["#000000", "#ffffff"],
+                "H&M": ["#e50000", "#ffffff"],
+                Nike: ["#ff6900", "#000000"],
+                "Levi's": ["#0f1b8c", "#ffffff"],
+                "Peter England": ["#8B0000", "#ffffff"],
+                "Allen Solley": ["#2E4057", "#ffffff"],
+                Raymonds: ["#800020", "#ffffff"],
             };
 
             // Location Display Functions
             function updateLocationDisplay(latitude, longitude, region = null) {
-                const cityName = region ? region.name : 'Unknown';
+                const cityName = region ? region.name : "Unknown";
                 document.getElementById("locationText").textContent = cityName;
                 showLocationDisplay();
             }
 
             function showLocationDisplay() {
-                locationDisplay.classList.add('active');
+                locationDisplay.classList.add("active");
             }
 
             function hideLocationDisplay() {
-                locationDisplay.classList.remove('active');
+                locationDisplay.classList.remove("active");
             }
 
             function showLocationDetails() {
@@ -888,29 +924,27 @@
 
             function showLocationPopup(latitude, longitude, region = null) {
                 const coordsText = `Lat: ${latitude.toFixed(6)}\nLng: ${longitude.toFixed(6)}`;
-                const regionText = region ? `📍 ${region.name}` : '🌍 Unknown Region';
-                
+                const regionText = region ? `📍 ${region.name}` : "🌍 Unknown Region";
+
                 document.getElementById("popupCoords").textContent = coordsText;
                 document.getElementById("popupRegion").textContent = regionText;
-                
-                locationPopup.classList.add('active');
+
+                locationPopup.classList.add("active");
             }
 
             function closeLocationPopup() {
-                locationPopup.classList.remove('active');
+                locationPopup.classList.remove("active");
             }
 
             // Close popup when clicking outside
-            locationPopup.addEventListener('click', (e) => {
+            locationPopup.addEventListener("click", (e) => {
                 if (e.target === locationPopup) {
                     closeLocationPopup();
                 }
             });
 
             function updateStatus(text, isError = false) {
-                statusEl.innerHTML = isError ? 
-                    `<i class="fas fa-exclamation-triangle"></i> ${text}` : 
-                    `<i class="fas fa-info-circle"></i> ${text}`;
+                statusEl.innerHTML = isError ? `<i class="fas fa-exclamation-triangle"></i> ${text}` : `<i class="fas fa-info-circle"></i> ${text}`;
                 statusEl.className = "status" + (isError ? " error" : "");
             }
 
@@ -924,26 +958,26 @@
                     updateStatus("Geolocation is not supported by this browser.", true);
                     return;
                 }
-                
+
                 showLoading("Getting your precise location...");
-                
+
                 navigator.geolocation.getCurrentPosition(
                     async (pos) => {
                         const { latitude, longitude } = pos.coords;
                         updateStatus(`📍 Located at ${latitude.toFixed(4)}, ${longitude.toFixed(4)} - Checking for exclusive offers...`);
-                        
+
                         try {
                             // First, get the region information
                             const offerRes = await fetch(`/offer?lat=${latitude}&lng=${longitude}`);
                             const offerData = await offerRes.json();
                             currentRegion = offerData.area ? { name: offerData.area } : null;
-                            
+
                             // Update persistent location display
                             updateLocationDisplay(latitude, longitude, currentRegion);
-                            
+
                             // Show location popup
                             showLocationPopup(latitude, longitude, currentRegion);
-                            
+
                             // Continue with the store loading
                             await refreshForCoords(latitude, longitude);
                         } catch (e) {
@@ -953,39 +987,39 @@
                     (err) => {
                         updateStatus(`Location access denied: ${err.message}`, true);
                     },
-                    { 
-                        enableHighAccuracy: true, 
-                        timeout: 10000, 
-                        maximumAge: 60000 
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000,
                     }
                 );
             }
 
             button.addEventListener("click", checkLocation);
             useCurrentBtn.addEventListener("click", checkLocation);
-            
+
             applyLatLngBtn.addEventListener("click", async () => {
                 const lat = parseFloat(latInput.value);
                 const lng = parseFloat(lngInput.value);
-                
+
                 if (Number.isNaN(lat) || Number.isNaN(lng)) {
                     updateStatus("Please enter valid numeric latitude and longitude values", true);
                     return;
                 }
-                
+
                 if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
                     updateStatus("Latitude must be between -90 and 90, longitude between -180 and 180", true);
                     return;
                 }
-                
+
                 showLoading("Checking coordinates...");
                 await refreshForCoords(lat, lng);
             });
-            
+
             regionSelect.addEventListener("change", async () => {
                 const value = regionSelect.value;
                 if (!value) return;
-                
+
                 const [lat, lng] = value.split(",").map(parseFloat);
                 showLoading(`Loading ${regionSelect.options[regionSelect.selectedIndex].text} region...`);
                 await refreshForCoords(lat, lng);
@@ -993,24 +1027,24 @@
 
             async function refreshForCoords(latitude, longitude) {
                 lastCoords = { latitude, longitude };
-                
+
                 try {
                     // Check for location-based offers
                     const offerRes = await fetch(`/offer?lat=${latitude}&lng=${longitude}`);
                     const offerData = await offerRes.json();
-                    
+
                     // Update current region
                     currentRegion = offerData.area ? { name: offerData.area } : null;
-                    
+
                     // Update persistent location display
                     updateLocationDisplay(latitude, longitude, currentRegion);
-                    
+
                     if (offerData.inside) {
                         document.getElementById("offer-text").textContent = offerData.offer.title;
                         document.getElementById("offer-desc").textContent = offerData.offer.description;
                         document.getElementById("offer-terms").textContent = offerData.offer.terms;
                         offerEl.style.display = "block";
-                        
+
                         updateStatus(`🎉 Great news! You're in ${offerData.area} - Exclusive offers are now active!`);
                     } else {
                         offerEl.style.display = "none";
@@ -1020,13 +1054,12 @@
                     // Load stores with location-based offers
                     const storeRes = await fetch(`/stores?lat=${latitude}&lng=${longitude}`);
                     const storeData = await storeRes.json();
-                    
+
                     lastData = storeData.stores;
                     renderCards(storeData.stores);
-                    
-                    const eligibleCount = storeData.stores.filter(s => s.eligible).length;
+
+                    const eligibleCount = storeData.stores.filter((s) => s.eligible).length;
                     storeCountEl.textContent = `${storeData.stores.length} Stores • ${eligibleCount} with Offers`;
-                    
                 } catch (error) {
                     updateStatus(`Network error: ${error.message}`, true);
                 }
@@ -1043,11 +1076,12 @@
                     return;
                 }
 
-                cardsEl.innerHTML = items.map((store) => {
-                    const colors = brandColors[store.name] || ['var(--gradient-primary)', 'white'];
-                    const stars = '★'.repeat(Math.floor(store.rating || 4)) + '☆'.repeat(5 - Math.floor(store.rating || 4));
-                    
-                    return `
+                cardsEl.innerHTML = items
+                    .map((store) => {
+                        const colors = brandColors[store.name] || ["var(--gradient-primary)", "white"];
+                        const stars = "★".repeat(Math.floor(store.rating || 4)) + "☆".repeat(5 - Math.floor(store.rating || 4));
+
+                        return `
                         <div class="store-card" onclick="showStoreDetails('${store.id}')">
                             <div class="store-image-container">
                                 <img src="${store.imagePath}" alt="${store.name} logo" class="store-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -1067,36 +1101,45 @@
                                     <span class="price-range"></span>
                                 </div>
                                 <div class="categories">
-                                    ${(store.categories || []).map(cat => `<span class="category-tag">${cat}</span>`).join('')}
+                                    ${(store.categories || []).map((cat) => `<span class="category-tag">${cat}</span>`).join("")}
                                 </div>
-                                <div class="offer-badge ${!store.eligible || !store.offer ? 'no-offer' : ''}">
-                                    ${store.eligible && store.offer ? `
+                                <div class="offer-badge ${!store.eligible || !store.offer ? "no-offer" : ""}">
+                                    ${
+                                        store.eligible && store.offer
+                                            ? `
                                         <div class="offer-title-badge">
                                             <i class="fas fa-tags"></i>
                                             ${store.offer.title}
                                         </div>
                                         <div class="offer-desc">${store.offer.description}</div>
-                                    ` : `
+                                    `
+                                            : `
                                         <div class="offer-title-badge">
                                             <i class="fas fa-map-marker-alt"></i>
                                             Location Required
                                         </div>
                                         <div class="offer-desc">Move to eligible area for offers</div>
-                                    `}
+                                    `
+                                    }
                                 </div>
                             </div>
                         </div>
                     `;
-                }).join("");
+                    })
+                    .join("");
             }
 
             function showStoreDetails(storeId) {
                 // This could open a modal or navigate to store detail page
                 console.log(`Showing details for store: ${storeId}`);
                 // For demo, just show an alert
-                const store = lastData?.find(s => s.id === storeId);
+                const store = lastData?.find((s) => s.id === storeId);
                 if (store) {
-                    alert(`${store.name}\nRating: ${store.rating}★\nCategories: ${store.categories?.join(", ")}\n${store.eligible && store.offer ? `Offer: ${store.offer.title} - ${store.offer.description}` : 'No active offers'}`);
+                    alert(
+                        `${store.name}\nRating: ${store.rating}★\nCategories: ${store.categories?.join(", ")}\n${
+                            store.eligible && store.offer ? `Offer: ${store.offer.title} - ${store.offer.description}` : "No active offers"
+                        }`
+                    );
                 }
             }
 
@@ -1106,26 +1149,31 @@
             }
 
             // Enhanced search with categories and better filtering
-            searchEl.addEventListener("input", debounce(() => {
-                if (!lastData) return;
-                
-                const query = searchEl.value.trim().toLowerCase();
-                if (!query) {
-                    renderCards(lastData);
-                    storeCountEl.textContent = `${lastData.length} Stores • ${lastData.filter(s => s.eligible).length} with Offers`;
-                    return;
-                }
-                
-                const filtered = lastData.filter((store) => {
-                    return store.name.toLowerCase().includes(query) ||
-                           (store.categories || []).some(cat => cat.toLowerCase().includes(query)) ||
-                           (store.offer?.title || '').toLowerCase().includes(query) ||
-                           (store.offer?.description || '').toLowerCase().includes(query);
-                });
-                
-                renderCards(filtered);
-                storeCountEl.textContent = `${filtered.length} Results • ${filtered.filter(s => s.eligible).length} with Offers`;
-            }, 300));
+            searchEl.addEventListener(
+                "input",
+                debounce(() => {
+                    if (!lastData) return;
+
+                    const query = searchEl.value.trim().toLowerCase();
+                    if (!query) {
+                        renderCards(lastData);
+                        storeCountEl.textContent = `${lastData.length} Stores • ${lastData.filter((s) => s.eligible).length} with Offers`;
+                        return;
+                    }
+
+                    const filtered = lastData.filter((store) => {
+                        return (
+                            store.name.toLowerCase().includes(query) ||
+                            (store.categories || []).some((cat) => cat.toLowerCase().includes(query)) ||
+                            (store.offer?.title || "").toLowerCase().includes(query) ||
+                            (store.offer?.description || "").toLowerCase().includes(query)
+                        );
+                    });
+
+                    renderCards(filtered);
+                    storeCountEl.textContent = `${filtered.length} Results • ${filtered.filter((s) => s.eligible).length} with Offers`;
+                }, 300)
+            );
 
             // Debounce function for search
             function debounce(func, wait) {
@@ -1145,11 +1193,8 @@
                 try {
                     const res = await fetch("/regions");
                     const data = await res.json();
-                    
-                    regionSelect.innerHTML = '<option value="">🌍 Choose Region</option>' + 
-                        data.regions.map((r) => 
-                            `<option value="${r.center.lat},${r.center.lng}">📍 ${r.name}</option>`
-                        ).join("");
+
+                    regionSelect.innerHTML = '<option value="">🌍 Choose Region</option>' + data.regions.map((r) => `<option value="${r.center.lat},${r.center.lng}">📍 ${r.name}</option>`).join("");
                 } catch (e) {
                     console.warn("Could not load regions:", e);
                 }
