@@ -13,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("combined"));
 app.use(express.static(path.join(__dirname, "..", "public")));
+// Serve brand images from src/img directory
+app.use("/src/img", express.static(path.join(__dirname, "img")));
 
 // Prometheus metrics
 const register = new promClient.Registry();
@@ -83,6 +85,7 @@ app.get("/stores", (req, res) => {
     const result = stores.map((s) => ({
         id: s.id,
         name: s.name,
+        imagePath: s.imagePath,
         categories: s.categories,
         rating: s.rating,
         priceRange: s.priceRange,
@@ -103,6 +106,7 @@ app.get("/stores/:id", (req, res) => {
     res.json({
         id: store.id,
         name: store.name,
+        imagePath: store.imagePath,
         categories: store.categories,
         rating: store.rating,
         priceRange: store.priceRange,
